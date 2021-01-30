@@ -32,7 +32,7 @@ class So65939000SdrCustomPathRelApplicationTests {
     @SneakyThrows
     void getAll() {
 
-        mockMvc.perform(get("/deviceTypes"))
+        mockMvc.perform(get("/types"))
                .andExpect(status().isOk())
                .andDo(print());  // print response to log
     }
@@ -44,7 +44,7 @@ class So65939000SdrCustomPathRelApplicationTests {
         List<DeviceType> deviceTypes = deviceTypeRepository.findAll();
         assertThat(deviceTypes).isEmpty();
 
-        mockMvc.perform(post("/deviceTypes")
+        mockMvc.perform(post("/types")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{ \"name\":\"iphone1000\", \"description\":\"iphone2000\" }"))
@@ -58,12 +58,12 @@ class So65939000SdrCustomPathRelApplicationTests {
         assertThat(deviceType0.getName()).isEqualTo("iphone1000");
         assertThat(deviceType0.getDescription()).isEqualTo("iphone2000");
 
-        mockMvc.perform(get("/deviceTypes"))
+        mockMvc.perform(get("/types"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("_embedded.deviceTypes").isArray())
-               .andExpect(jsonPath("_embedded.deviceTypes", hasSize(1)))
-               .andExpect(jsonPath("_embedded.deviceTypes[0].name").value("iphone1000"))
-               .andExpect(jsonPath("_embedded.deviceTypes[0].description").value("iphone2000"))
+               .andExpect(jsonPath("_embedded.types").isArray())
+               .andExpect(jsonPath("_embedded.types", hasSize(1)))
+               .andExpect(jsonPath("_embedded.types[0].name").value("iphone1000"))
+               .andExpect(jsonPath("_embedded.types[0].description").value("iphone2000"))
                .andDo(print());  // print response to log
     }
 
